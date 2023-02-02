@@ -1,8 +1,8 @@
 # Project React | TypeScript | Material Ui
 
-Esse projeto _react_ será criado inteiramente utilizando a biblioteca de componentes _Material ui_, utilizando o _Typescript_ com o objetivo de criar um passo a passo, para facilitar a criação de novos projetos, para mim, que ainda sou desenvolvedor jr, e para colegas que queiram utilizar.
-
-ps: Sempre vá no link para verificar se houve alguma modificação.
+Esse projeto _react_ será criado utilizando a biblioteca de componentes _Material ui_ e _Typescript_.
+O objetivo é aprender a usar de forma mais complexa a biblioteca e também de criar um passo a passo, para facilitar a criação de novos projetos, tanto para que eu possa utilizar, como desenvolvedor jr, e para colegas caso assim desejem.
+_ps_: Sempre vá no link para verificar se houve alguma modificação.
 
 ### Passo 01
 
@@ -12,7 +12,7 @@ ps: Sempre vá no link para verificar se houve alguma modificação.
 
 ### INSTALANDO O _MATERIAL UI_
 
-Instalar a biblioteca: https://mui.com/
+https://mui.com/
 
 - com _yarn_ yarn add @mui/material @emotion/react @emotion/styled
 - com _yarn_ add @mui/icons-material
