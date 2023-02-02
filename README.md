@@ -29,3 +29,5 @@ Fontes _Google Web Fonts_ e _Icons_ : Copiar e colar dentro do Index.html
 />
 
 ### TEMAS DO PROJETO
+
+Verificar pasta themes
