@@ -28,6 +28,17 @@ Fontes _Google Web Fonts_ e _Icons_ : Copiar e colar dentro do Index.html
   href="https://fonts.googleapis.com/icon?family=Material+Icons"
 />
 
-### TEMAS DO PROJETO
+### LEMBRA DOS TEMAS DO PROJETO
 
-Verificar pasta themes
+Não esquece de fazer os temas.
+
+### PEQUENA EXPLICAÇÃO DOS COMPONENTES MUI
+
+- <Drawer> Ele pode receber as propriedades:
+  _open_ onde eu posso definir quando ele abre e fecha
+  _variant_ onde posso definir se ele e fixo ou não
+
+- Existe uma diferença entre o <box> @mui/material e do <box> @mui/system
+- o hook _useTheme_ do @mui/material pode acessar o tema na página.
+
+-O material ui tem uma unidade de medida própria _theme.spacing(28)_ 1=4px 2=8px 3=12px, porque usar isso?
