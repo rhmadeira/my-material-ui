@@ -2,14 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import { AppThemeProvider } from "./shared/context";
+import { DrawerProvider } from "./shared/context/DrawerContext";
+import { AppThemeProvider } from "./shared/context/ThemeContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <AppThemeProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <DrawerProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </DrawerProvider>
     </AppThemeProvider>
   </React.StrictMode>
 );

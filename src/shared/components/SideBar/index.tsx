@@ -1,9 +1,17 @@
-import { Avatar, Drawer, Icon, List, useTheme } from "@mui/material";
+import {
+  Avatar,
+  Drawer,
+  Icon,
+  List,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { ListItemButton } from "@mui/material";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Box } from "@mui/system";
+import { useDrawerContext } from "../../context/DrawerContext";
 
 interface ISideBarProps {
   children: React.ReactNode;
@@ -11,9 +19,15 @@ interface ISideBarProps {
 
 export const SideBar = ({ children }: ISideBarProps) => {
   const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"));
+  const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext();
   return (
     <>
-      <Drawer variant="permanent">
+      <Drawer
+        onClose={toggleDrawerOpen}
+        open={isDrawerOpen}
+        variant={smDown ? "temporary" : "permanent"}
+      >
         <Box
           width={theme.spacing(28)}
           height="100%"
@@ -46,7 +60,10 @@ export const SideBar = ({ children }: ISideBarProps) => {
           </Box>
         </Box>
       </Drawer>
-      <Box height="100vh" marginLeft={theme.spacing(28)}>
+      <Box
+        height="100vh"
+        marginLeft={smDown ? theme.spacing(0) : theme.spacing(28)}
+      >
         {children}
       </Box>
     </>
