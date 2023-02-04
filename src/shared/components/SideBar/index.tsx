@@ -1,17 +1,8 @@
-import {
-  Avatar,
-  Drawer,
-  Icon,
-  List,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Avatar, Drawer, List, useMediaQuery, useTheme } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { ListItemButton } from "@mui/material";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import { Box } from "@mui/system";
 import { useDrawerContext } from "../../context/DrawerContext";
+import { OptionsDrawerLink } from "./OptionsDrawerLink";
 
 interface ISideBarProps {
   children: React.ReactNode;
@@ -50,12 +41,12 @@ export const SideBar = ({ children }: ISideBarProps) => {
           <Divider />
           <Box flex={1}>
             <List component="nav">
-              <ListItemButton>
-                <ListItemIcon>
-                  <Icon>home</Icon>
-                </ListItemIcon>
-                <ListItemText primary="Home" />
-              </ListItemButton>
+              <OptionsDrawerLink
+                icon="home"
+                label="Página Inicial"
+                to="/home"
+                onClick={smDown ? toggleDrawerOpen : undefined}
+              />
             </List>
           </Box>
         </Box>
