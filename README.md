@@ -44,6 +44,9 @@ Não esquece de fazer os temas.
 
 -O material ui tem uma unidade de medida própria _theme.spacing(28)_ 1=4px 2=8px 3=12px, porque usar isso?
 
+A duas formas de suar os icones no Mui
+<NomeDoICone /> ou <Icon>nomedoicone<>
+
 ### useMediaQuery para controlar a responsividade no material
 
 theme.breakpoints.down : controla quando a nossa tela tiver menor que o brakpoint passado
