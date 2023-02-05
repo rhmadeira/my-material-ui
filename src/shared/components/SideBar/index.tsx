@@ -1,7 +1,15 @@
-import { Avatar, Drawer, List, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Avatar,
+  Drawer,
+  List,
+  Switch,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { Box } from "@mui/system";
 import { useDrawerContext } from "../../context/DrawerContext";
+import { useAppThemeContext } from "../../context/ThemeContext";
 import { OptionsDrawerLink } from "./OptionsDrawerLink";
 
 interface ISideBarProps {
@@ -12,6 +20,7 @@ export const SideBar = ({ children }: ISideBarProps) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
   const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext();
+  const { toggleTheme } = useAppThemeContext();
   return (
     <>
       <Drawer
@@ -48,6 +57,9 @@ export const SideBar = ({ children }: ISideBarProps) => {
                 onClick={smDown ? toggleDrawerOpen : undefined}
               />
             </List>
+          </Box>
+          <Box>
+            <Switch onChange={() => toggleTheme()} />
           </Box>
         </Box>
       </Drawer>

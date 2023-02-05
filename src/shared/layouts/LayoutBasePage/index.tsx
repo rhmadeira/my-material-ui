@@ -5,7 +5,7 @@ import { useDrawerContext } from "../../context/DrawerContext";
 
 interface LayoutBasePageProps {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   toolbar?: React.ReactNode;
 }
 
