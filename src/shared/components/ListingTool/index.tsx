@@ -1,7 +1,7 @@
 import { Box, Button, Paper, TextField, useTheme } from "@mui/material";
 import Icon from "@mui/material/Icon";
 
-interface IToolbarProps {
+interface IListingToolProps {
   textSearch?: string;
   showSearch?: boolean;
   handleTextSearch?: (text: string) => void;
@@ -10,14 +10,14 @@ interface IToolbarProps {
   handleClickBottom?: () => void;
 }
 
-export function ToolBar({
+export function ListingTool({
   textSearch = "",
   handleTextSearch,
   showSearch = false,
   textBottom = "Novo",
   showBottom = true,
   handleClickBottom,
-}: IToolbarProps) {
+}: IListingToolProps) {
   const theme = useTheme();
   return (
     <Box
