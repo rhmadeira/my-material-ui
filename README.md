@@ -34,4 +34,31 @@ Fontes _Google Web Fonts_ e _Icons_ : Copiar e colar dentro do Index.html
 
 ### usar o useMediaQuery para controlar a responsividade no material
 
-### Configurando um backend para o projeto utilizando o json-server
+## Configurando um backend para o projeto utilizando o json-server
+
+### Como usar:
+
+1. Abra uma nova aba no terminal
+2. Execute o comando:
+
+   caso instalado -D
+
+   `npx json-server -w -p 3333 ./mock/database.json`
+
+   caso instalado -g
+
+   `json-server -w -p 3333 ./mock/database.json`
+
+## Você pode automatizar o processo no package.json:
+
+1. Em scripts
+
+   ` "mock": "json-server --watch -p 3333 ./mock/database.json"`
+
+2. Então depois usar o comando
+
+   `npm mock`
+
+### Utilizando axios para fazer as requisições
+
+### Variáveis de Ambiente
