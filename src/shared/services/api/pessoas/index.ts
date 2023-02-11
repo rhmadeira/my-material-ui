@@ -43,24 +43,65 @@ const getAll = async (
   }
 };
 
-const getById = async (): Promise<any> => {
+const getById = async (id: number): Promise<IDetailsPerson | Error> => {
   try {
-  } catch (error) {}
+    const { data } = await api.get(`/pessoas/${id}`);
+    if (data) {
+      return data;
+    }
+    return new Error("Erro ao consultar os dados");
+  } catch (error) {
+    console.error(error);
+    return new Error(
+      (error as { message: string }).message ||
+        "Não foi possível consultar os dados"
+    );
+  }
 };
 
-const create = async (): Promise<any> => {
+const create = async (
+  dados: Omit<IDetailsPerson, "id">
+): Promise<number | Error> => {
   try {
-  } catch (error) {}
+    const { data } = await api.post<IDetailsPerson>(`/pessoas`, dados);
+    if (data) {
+      return data.id;
+    }
+    return new Error("Erro ao criar os dados");
+  } catch (error) {
+    console.error(error);
+    return new Error(
+      (error as { message: string }).message ||
+        "Não foi possível criar os dados"
+    );
+  }
 };
 
-const updateById = async (): Promise<any> => {
+const updateById = async (
+  id: number,
+  dados: IDetailsPerson
+): Promise<void | Error> => {
   try {
-  } catch (error) {}
+    await api.put(`/pessoas/${id}`, dados);
+  } catch (error) {
+    console.error(error);
+    return new Error(
+      (error as { message: string }).message ||
+        "Não foi possível atualizar os dados"
+    );
+  }
 };
 
-const deleteById = async (): Promise<any> => {
+const deleteById = async (id: number): Promise<void | Error> => {
   try {
-  } catch (error) {}
+    await api.delete(`/pessoas/${id}`);
+  } catch (error) {
+    console.error(error);
+    return new Error(
+      (error as { message: string }).message ||
+        "Não foi possível deletar os dados"
+    );
+  }
 };
 
 export const PessoasService = {
