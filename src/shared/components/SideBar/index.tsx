@@ -56,6 +56,12 @@ export const SideBar = ({ children }: ISideBarProps) => {
                 to="/home"
                 onClick={smDown ? toggleDrawerOpen : undefined}
               />
+              <OptionsDrawerLink
+                icon="location_city"
+                label="Cidades"
+                to="/cidades"
+                onClick={smDown ? toggleDrawerOpen : undefined}
+              />
             </List>
           </Box>
           <Box>
