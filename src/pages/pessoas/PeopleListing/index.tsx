@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ListingTool } from "../../../shared/components/ListingTool";
+import { useDebounce } from "../../../shared/hooks/useDebounce";
 import LayoutBasePage from "../../../shared/layouts/LayoutBasePage";
 import { PessoasService } from "../../../shared/services/api/pessoas";
 
