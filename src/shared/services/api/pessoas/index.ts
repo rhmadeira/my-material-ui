@@ -25,7 +25,7 @@ const getAll = async (
   filter = ""
 ): Promise<TPersonTotalCount | Error> => {
   try {
-    const urlRelative = `/pessoas?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nome_like=${filter}`;
+    const urlRelative = `/pessoas?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nomeCompleto_like=${filter}`;
     const { data, headers } = await api.get(urlRelative);
     if (data) {
       const totalCount = Number(

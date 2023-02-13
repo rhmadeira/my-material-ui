@@ -1,9 +1,8 @@
-import { Button } from "@mui/material";
 import { Navigate, Route, Routes } from "react-router-dom";
-import CityList from "../../pages/cidades/CityList";
 import { Home } from "../../pages/Home";
 import { useDrawerContext } from "../../shared/context/DrawerContext";
 import { useAppThemeContext } from "../../shared/context/ThemeContext";
+import PeopleListing from "../../pages/pessoas/PeopleListing";
 
 export const AppRoutes = () => {
   const { toggleTheme } = useAppThemeContext();
@@ -11,7 +10,7 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/home" element={<Home />} />
-      <Route path="/cidades" element={<CityList />} />
+      <Route path="/pessoas" element={<PeopleListing />} />
       {/* <Route path="/cidades/detalhes/:id" element={<CityList />} /> */}
 
       <Route path="*" element={<Navigate to="/home" />} />

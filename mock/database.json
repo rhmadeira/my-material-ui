@@ -2,15 +2,9 @@
   "pessoas": [
     {
       "id": 1,
-      "nomeCompleto": "João Pedro Servero",
       "email": "aiosdisoajd@aisjdasd.com",
-      "cidade": "São Paulo"
-    },
-    {
-      "id": 2,
-      "nomeCompleto": "Maria da Silva",
-      "email": "aiosdisoajd@aisjdasd.com",
-      "cidade": "São Paulo"
+      "cidadeId": 1,
+      "nomeCompleto": "Maria da Silva"
     }
   ]
 }

@@ -57,6 +57,12 @@ export const SideBar = ({ children }: ISideBarProps) => {
                 onClick={smDown ? toggleDrawerOpen : undefined}
               />
               <OptionsDrawerLink
+                icon="people"
+                label="Pessoas"
+                to="/pessoas"
+                onClick={smDown ? toggleDrawerOpen : undefined}
+              />
+              <OptionsDrawerLink
                 icon="location_city"
                 label="Cidades"
                 to="/cidades"
