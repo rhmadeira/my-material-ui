@@ -62,3 +62,5 @@ Fontes _Google Web Fonts_ e _Icons_ : Copiar e colar dentro do Index.html
 ### Utilizando axios para fazer as requisições
 
 ### Variáveis de Ambiente
+
+### Instalar @types/node para tipagens node
