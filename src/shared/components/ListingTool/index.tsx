@@ -46,6 +46,7 @@ export function ListingTool({
             color="primary"
             disableElevation
             endIcon={<Icon>add</Icon>}
+            onClick={handleClickBottom}
           >
             {textBottom}
           </Button>

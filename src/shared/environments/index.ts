@@ -2,7 +2,7 @@ export const Environment = {
   /**
    * Define o numero de linhas a ser carregadas na listagem
    */
-  LIMITE_DE_LINHAS: "10",
+  LIMITE_DE_LINHAS: "6",
   /**
    * Define o texto do input de pesquisa
    */

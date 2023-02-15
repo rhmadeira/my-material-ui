@@ -27,7 +27,7 @@ interface IDetailToolProps {
   handleClickButtonAdd?: () => void;
   handleClickButtonDelete?: () => void;
   handleClickButtonBack?: () => void;
-  handleClickButtonSave?: () => void;
+  handleClickButtonSave: () => void;
   handleClickButtonSaveAndBack?: () => void;
 }
 
