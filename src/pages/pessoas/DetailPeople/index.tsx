@@ -11,8 +11,10 @@ import { PessoasService } from "../../../shared/services/api/pessoas";
 type RouteParams = {
   id: string;
 };
-interface FormData {
+interface IFormData {
   nomeCompleto: string;
+  cidadeId: number;
+  email: string;
 }
 
 export default function DetailPeople() {
@@ -20,7 +22,8 @@ export default function DetailPeople() {
   const [isLoading, setIsLoading] = useState(false);
   const [nome, setNome] = useState("");
   const navigate = useNavigate();
-  const { handleSubmit, control } = useForm<FormData>();
+  const { handleSubmit, control, setValue } = useForm<IFormData>();
+  const [detail, setDetail] = useState<IFormData>();
 
   useEffect(() => {
     if (id !== "nova") {
@@ -32,15 +35,43 @@ export default function DetailPeople() {
           navigate("/pessoas");
         } else {
           setNome(response.nomeCompleto);
-          console.log(response);
+          setValue("nomeCompleto", response.nomeCompleto);
+          setValue("email", response.email);
+          setValue("cidadeId", response.cidadeId);
+          // setDetail(response);
         }
       });
     }
   }, [id]);
 
-  function handleSave(data: FormData) {
-    alert("Salvando");
-    console.log(data);
+  // useEffect(() => {
+  //   if (detail) {
+  //     setValue("nomeCompleto", detail.nomeCompleto);
+  //     setValue("email", detail.email);
+  //     setValue("cidadeId", detail.cidadeId);
+  //   }
+  // }, [detail]);
+
+  function handleSave(data: IFormData) {
+    setIsLoading(true);
+    if (id === "nova") {
+      PessoasService.create(data).then((result) => {
+        setIsLoading(false);
+        if (result instanceof Error) {
+          alert(result.message);
+        } else {
+          alert("Registro salvo com sucesso!");
+          navigate("/pessoas");
+        }
+      });
+    } else {
+      PessoasService.updateById(+id, { id: +id, ...data }).then((result) => {
+        setIsLoading(false);
+        if (result instanceof Error) {
+          alert(result.message);
+        }
+      });
+    }
   }
 
   function handleDelete(id: number) {
@@ -82,7 +113,12 @@ export default function DetailPeople() {
       {isLoading ? (
         <LinearProgress variant="indeterminate" />
       ) : (
-        <Box component="form" onSubmit={handleSubmit(handleSave)}>
+        <Box
+          component="form"
+          display="flex"
+          gap={1}
+          onSubmit={handleSubmit(handleSave)}
+        >
           <InputControlled
             controller={{
               name: "nomeCompleto",
@@ -90,6 +126,24 @@ export default function DetailPeople() {
               defaultValue: nome,
             }}
             label="Nome"
+            fullWidth
+          />
+          <InputControlled
+            controller={{
+              name: "email",
+              control,
+              defaultValue: nome,
+            }}
+            label="Email"
+            fullWidth
+          />
+          <InputControlled
+            controller={{
+              name: "cidadeId",
+              control,
+              defaultValue: nome,
+            }}
+            label="Cidade"
             fullWidth
           />
           <Button type="submit">Enviar</Button>
