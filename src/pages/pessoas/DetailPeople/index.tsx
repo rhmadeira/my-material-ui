@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -12,10 +12,7 @@ type RouteParams = {
   id: string;
 };
 interface FormData {
-  id: number;
   nomeCompleto: string;
-  cidadeId: number;
-  email: string;
 }
 
 export default function DetailPeople() {
@@ -23,7 +20,7 @@ export default function DetailPeople() {
   const [isLoading, setIsLoading] = useState(false);
   const [nome, setNome] = useState("");
   const navigate = useNavigate();
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control } = useForm<FormData>();
 
   useEffect(() => {
     if (id !== "nova") {
@@ -43,7 +40,7 @@ export default function DetailPeople() {
 
   function handleSave(data: FormData) {
     alert("Salvando");
-    // console.log(data);
+    console.log(data);
   }
 
   function handleDelete(id: number) {
@@ -72,7 +69,7 @@ export default function DetailPeople() {
           showButtonSaveAndBack
           // handleClickButtonSaveAndBack={handleSave}
           handleClickButtonDelete={() => handleDelete(+id)}
-          handleClickButtonSave={handleSave}
+          handleClickButtonSave={() => {}}
           handleClickButtonAdd={() => {
             navigate("/pessoas/detalhes/nova");
           }}
@@ -94,9 +91,8 @@ export default function DetailPeople() {
             }}
             label="Nome"
             fullWidth
-            onChange={(e) => setNome(e.target.value)}
-            value={nome}
           />
+          <Button type="submit">Enviar</Button>
         </Box>
       )}
     </LayoutBasePage>
