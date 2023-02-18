@@ -1,28 +1,38 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { DetailTool } from "../../../shared/components/DetailTool";
 import InputControlled from "../../../shared/form/InputControlled";
 import LayoutBasePage from "../../../shared/layouts/LayoutBasePage";
 import { PessoasService } from "../../../shared/services/api/pessoas";
+import * as yup from "yup";
 
 type RouteParams = {
   id: string;
 };
-interface IFormData {
-  nomeCompleto: string;
-  cidadeId: number;
-  email: string;
-}
+
+const formValidateSchema = yup.object().shape({
+  nomeCompleto: yup.string().required("Nome é obrigatório"),
+  cidadeId: yup.number().required("Cidade é obrigatório"),
+  email: yup.string().email().required("Email é obrigatório"),
+});
+
+type IFormData = yup.InferType<typeof formValidateSchema>;
+
+// interface IFormData {
+//   nomeCompleto: string;
+//   cidadeId: number;
+//   email: string;
+// }
 
 export default function DetailPeople() {
   const { id = "nova" } = useParams<RouteParams>();
   const [isLoading, setIsLoading] = useState(false);
   const [nome, setNome] = useState("");
   const navigate = useNavigate();
-  const { handleSubmit, control, setValue } = useForm<IFormData>();
+  const { handleSubmit, control, setValue, reset } = useForm<IFormData>();
   const [detail, setDetail] = useState<IFormData>();
 
   useEffect(() => {
@@ -41,37 +51,47 @@ export default function DetailPeople() {
           // setDetail(response);
         }
       });
+    } else {
+      setValue("nomeCompleto", "");
+      setValue("email", "");
+      setValue("cidadeId", 0);
     }
   }, [id]);
 
-  // useEffect(() => {
-  //   if (detail) {
-  //     setValue("nomeCompleto", detail.nomeCompleto);
-  //     setValue("email", detail.email);
-  //     setValue("cidadeId", detail.cidadeId);
-  //   }
-  // }, [detail]);
-
   function handleSave(data: IFormData) {
-    setIsLoading(true);
-    if (id === "nova") {
-      PessoasService.create(data).then((result) => {
-        setIsLoading(false);
-        if (result instanceof Error) {
-          alert(result.message);
+    formValidateSchema
+      .validate(data, { abortEarly: false })
+      .then((dataValidate) => {
+        setIsLoading(true);
+        if (id === "nova") {
+          PessoasService.create(dataValidate).then((result) => {
+            setIsLoading(false);
+            if (result instanceof Error) {
+              alert(result.message);
+            } else {
+              alert("Registro salvo com sucesso!");
+              // navigate(`/pessoas/detalhes/${result}`);
+              navigate("/pessoas/detalhes/nova");
+            }
+          });
         } else {
-          alert("Registro salvo com sucesso!");
-          navigate("/pessoas");
+          PessoasService.updateById(+id, { id: +id, ...dataValidate }).then(
+            (result) => {
+              setIsLoading(false);
+              if (result instanceof Error) {
+                alert(result.message);
+              }
+            }
+          );
         }
+      })
+      .catch((err: yup.ValidationError) => {
+        const ValidateErrors: { [key: string]: string } = {};
+        err.inner.forEach((error) => {
+          if (!error.path) return;
+          ValidateErrors[error.path] = error.message;
+        });
       });
-    } else {
-      PessoasService.updateById(+id, { id: +id, ...data }).then((result) => {
-        setIsLoading(false);
-        if (result instanceof Error) {
-          alert(result.message);
-        }
-      });
-    }
   }
 
   function handleDelete(id: number) {
@@ -113,40 +133,76 @@ export default function DetailPeople() {
       {isLoading ? (
         <LinearProgress variant="indeterminate" />
       ) : (
-        <Box
-          component="form"
-          display="flex"
-          gap={1}
-          onSubmit={handleSubmit(handleSave)}
-        >
-          <InputControlled
-            controller={{
-              name: "nomeCompleto",
-              control,
-              defaultValue: nome,
-            }}
-            label="Nome"
-            fullWidth
-          />
-          <InputControlled
-            controller={{
-              name: "email",
-              control,
-              defaultValue: nome,
-            }}
-            label="Email"
-            fullWidth
-          />
-          <InputControlled
-            controller={{
-              name: "cidadeId",
-              control,
-              defaultValue: nome,
-            }}
-            label="Cidade"
-            fullWidth
-          />
-          <Button type="submit">Enviar</Button>
+        <Box component="form" onSubmit={handleSubmit(handleSave)}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            margin={1}
+            component={Paper}
+            variant="outlined"
+          >
+            <Grid container padding={2} spacing={2}>
+              {isLoading && (
+                <Grid item>
+                  <LinearProgress variant="indeterminate" />
+                </Grid>
+              )}
+              <Grid item>
+                <Typography variant="h6">Dados Pessoais</Typography>
+              </Grid>
+              <Grid container item direction="row" spacing={2}>
+                <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                  <InputControlled
+                    controller={{
+                      name: "nomeCompleto",
+                      control,
+                      defaultValue: nome,
+                    }}
+                    label="Nome"
+                    size="small"
+                    fullWidth
+                    {...(id === "nova" && { autoFocus: true })}
+                    disabled={isLoading}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container item direction="row" spacing={2}>
+                <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                  <InputControlled
+                    controller={{
+                      name: "email",
+                      control,
+                      defaultValue: nome,
+                    }}
+                    label="Email"
+                    size="small"
+                    fullWidth
+                    disabled={isLoading}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container item direction="row" spacing={2}>
+                <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                  {" "}
+                  <InputControlled
+                    controller={{
+                      name: "cidadeId",
+                      control,
+                      defaultValue: nome,
+                    }}
+                    label="Cidade"
+                    size="small"
+                    fullWidth
+                    disabled={isLoading}
+                  />
+                </Grid>
+              </Grid>
+
+              <Button size="small" type="submit">
+                Salvar
+              </Button>
+            </Grid>
+          </Box>
         </Box>
       )}
     </LayoutBasePage>

@@ -4,7 +4,6 @@ import { useDrawerContext } from "../../shared/context/DrawerContext";
 import { useAppThemeContext } from "../../shared/context/ThemeContext";
 import PeopleListing from "../../pages/pessoas/PeopleListing";
 import DetailPeople from "../../pages/pessoas/DetailPeople";
-import Teste from "../../pages/Teste";
 
 export const AppRoutes = () => {
   const { toggleTheme } = useAppThemeContext();
@@ -14,7 +13,6 @@ export const AppRoutes = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/pessoas" element={<PeopleListing />} />
       <Route path="/pessoas/detalhes/:id" element={<DetailPeople />} />
-      <Route path="/teste" element={<Teste />} />
 
       <Route path="*" element={<Navigate to="/home" />} />
     </Routes>
