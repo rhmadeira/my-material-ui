@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DetailTool } from "../../../shared/components/DetailTool";
 import InputControlled from "../../../shared/form/InputControlled";
 import LayoutBasePage from "../../../shared/layouts/LayoutBasePage";
-import { PessoasService } from "../../../shared/services/api/pessoas";
+import { CidadesService } from "../../../shared/services/api/cidades";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -15,9 +15,7 @@ type RouteParams = {
 };
 
 const formValidateSchema = yup.object().shape({
-  nomeCompleto: yup.string().required(),
-  cidadeId: yup.number().required(),
-  email: yup.string().email().required(),
+  nome: yup.string().required(),
 });
 
 type IFormData = yup.InferType<typeof formValidateSchema>;
@@ -41,42 +39,37 @@ export default function DetailPeople() {
   useEffect(() => {
     if (id !== "nova") {
       setIsLoading(true);
-      PessoasService.getById(+id).then((response) => {
+      CidadesService.getById(+id).then((response) => {
         setIsLoading(false);
         if (response instanceof Error) {
           alert("Erro ao buscar pessoa");
-          navigate("/pessoas");
+          navigate("/cidades");
         } else {
-          setNome(response.nomeCompleto);
-          setValue("nomeCompleto", response.nomeCompleto);
-          setValue("email", response.email);
-          setValue("cidadeId", response.cidadeId);
-          // setDetail(response);
+          setNome(response.nome);
+          setValue("nome", response.nome);
         }
       });
     } else {
-      setValue("nomeCompleto", "");
-      setValue("email", "");
-      setValue("cidadeId", 0);
+      setValue("nome", "");
     }
   }, [id]);
 
   function handleSave(data: IFormData) {
     setIsLoading(true);
     if (id === "nova") {
-      PessoasService.create(data).then((result) => {
+      CidadesService.create(data).then((result) => {
         setIsLoading(false);
         if (result instanceof Error) {
           alert(result.message);
           89;
         } else {
           alert("Registro salvo com sucesso!");
-          // navigate(`/pessoas/detalhes/${result}`);
-          navigate("/pessoas/detalhes/nova");
+          // navigate(`/cidades/detalhes/${result}`);
+          navigate("/cidades/detalhes/nova");
         }
       });
     } else {
-      PessoasService.updateById(+id, { id: +id, ...data }).then((result) => {
+      CidadesService.updateById(+id, { id: +id, ...data }).then((result) => {
         setIsLoading(false);
         if (result instanceof Error) {
           alert(result.message);
@@ -87,7 +80,7 @@ export default function DetailPeople() {
 
   function handleDelete(id: number) {
     if (confirm("Realmente deseja apagar?")) {
-      PessoasService.deleteById(id).then((result) => {
+      CidadesService.deleteById(id).then((result) => {
         if (result instanceof Error) {
           alert(result.message);
         } else {
@@ -109,14 +102,13 @@ export default function DetailPeople() {
           showButtonBack
           showButtonDelete={id !== "nova"}
           showButtonSaveAndBack
-          // handleClickButtonSaveAndBack={handleSave}
           handleClickButtonDelete={() => handleDelete(+id)}
           handleClickButtonSave={() => {}}
           handleClickButtonAdd={() => {
-            navigate("/pessoas/detalhes/nova");
+            navigate("/cidades/detalhes/nova");
           }}
           handleClickButtonBack={() => {
-            navigate("/pessoas");
+            navigate("/cidades");
           }}
         />
       }
@@ -145,7 +137,7 @@ export default function DetailPeople() {
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
                   <InputControlled
                     controller={{
-                      name: "nomeCompleto",
+                      name: "nome",
                       control,
                       defaultValue: nome,
                     }}
@@ -155,43 +147,9 @@ export default function DetailPeople() {
                     {...(id === "nova" && { autoFocus: true })}
                     disabled={isLoading}
                   />
-                  <p>{errors.nomeCompleto?.message}</p>
+                  <p>{errors.nome?.message}</p>
                 </Grid>
               </Grid>
-              <Grid container item direction="row" spacing={2}>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                  <InputControlled
-                    controller={{
-                      name: "email",
-                      control,
-                      defaultValue: nome,
-                    }}
-                    label="Email"
-                    size="small"
-                    fullWidth
-                    disabled={isLoading}
-                  />
-                  <p>{errors.email?.message}</p>
-                </Grid>
-              </Grid>
-              <Grid container item direction="row" spacing={2}>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                  {" "}
-                  <InputControlled
-                    controller={{
-                      name: "cidadeId",
-                      control,
-                      defaultValue: nome,
-                    }}
-                    label="Cidade"
-                    size="small"
-                    fullWidth
-                    disabled={isLoading}
-                  />
-                  <p>{errors.cidadeId?.message}</p>
-                </Grid>
-              </Grid>
-
               <Button size="small" type="submit">
                 Salvar
               </Button>

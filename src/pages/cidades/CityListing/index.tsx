@@ -18,19 +18,17 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ListingTool } from "../../../shared/components/ListingTool";
 import useDebounce from "../../../shared/hooks/useDebounce";
 import LayoutBasePage from "../../../shared/layouts/LayoutBasePage";
-import { PessoasService } from "../../../shared/services/api/pessoas";
+import { CidadesService } from "../../../shared/services/api/cidades";
 import { Environment } from "../../../shared/environments";
 
-interface IPeopleListing {
+interface ICityListing {
   id: number;
-  email: string;
-  cidadeId: number;
-  nomeCompleto: string;
+  nome: string;
 }
 
-export default function PeopleListing() {
+export default function CityListing() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [rows, setRows] = useState<IPeopleListing[]>([]);
+  const [rows, setRows] = useState<ICityListing[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const { debounce } = useDebounce();
@@ -48,7 +46,7 @@ export default function PeopleListing() {
     setIsLoading(true);
 
     debounce(() => {
-      PessoasService.getAll(pagina, busca).then((result) => {
+      CidadesService.getAll(pagina, busca).then((result) => {
         setIsLoading(false);
 
         if (result instanceof Error) {
@@ -65,7 +63,7 @@ export default function PeopleListing() {
 
   const handleDelete = (id: number) => {
     if (confirm("Realmente deseja apagar?")) {
-      PessoasService.deleteById(id).then((result) => {
+      CidadesService.deleteById(id).then((result) => {
         if (result instanceof Error) {
           alert(result.message);
         } else {
@@ -120,8 +118,7 @@ export default function PeopleListing() {
                     <Icon fontSize="small">edit</Icon>
                   </IconButton>
                 </TableCell>
-                <TableCell>{row.nomeCompleto}</TableCell>
-                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.nome}</TableCell>
               </TableRow>
             ))}
           </TableBody>
