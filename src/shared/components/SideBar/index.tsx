@@ -1,6 +1,8 @@
 import {
   Avatar,
   Drawer,
+  Icon,
+  IconButton,
   List,
   Switch,
   useMediaQuery,
@@ -10,6 +12,7 @@ import Divider from "@mui/material/Divider";
 import { Box } from "@mui/system";
 import { useDrawerContext } from "../../context/DrawerContext";
 import { useAppThemeContext } from "../../context/ThemeContext";
+import { useAuthContext } from "../../hooks/AuthContext";
 import { OptionsDrawerLink } from "./OptionsDrawerLink";
 
 interface ISideBarProps {
@@ -21,6 +24,7 @@ export const SideBar = ({ children }: ISideBarProps) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
   const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext();
   const { toggleTheme } = useAppThemeContext();
+  const { logout } = useAuthContext();
   return (
     <>
       <Drawer
@@ -70,6 +74,9 @@ export const SideBar = ({ children }: ISideBarProps) => {
               />
             </List>
           </Box>
+          <IconButton onClick={logout}>
+            <Icon>logout</Icon>
+          </IconButton>
           <Box>
             <Switch onChange={() => toggleTheme()} />
           </Box>

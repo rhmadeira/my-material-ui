@@ -78,13 +78,13 @@ export default function CityListing() {
 
   return (
     <LayoutBasePage
-      title="Listagem de Pessoas"
+      title="Listagem de Cidades"
       toolbar={
         <ListingTool
           textBottom="Nova"
           showSearch
           textSearch={busca}
-          handleClickBottom={() => navigate("/pessoas/detalhes/nova")}
+          handleClickBottom={() => navigate("/cidades/detalhes/nova")}
           handleTextSearch={(text) =>
             setSearchParams({ busca: text, page: "1" }, { replace: true })
           }
@@ -100,8 +100,7 @@ export default function CityListing() {
           <TableHead>
             <TableRow>
               <TableCell width={100}>Ações</TableCell>
-              <TableCell>Nome completo</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Nome</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -113,7 +112,7 @@ export default function CityListing() {
                   </IconButton>
                   <IconButton
                     size="small"
-                    onClick={() => navigate(`/pessoas/detalhes/${row.id}`)}
+                    onClick={() => navigate(`/cidades/detalhes/${row.id}`)}
                   >
                     <Icon fontSize="small">edit</Icon>
                   </IconButton>

@@ -20,7 +20,7 @@ const formValidateSchema = yup.object().shape({
 
 type IFormData = yup.InferType<typeof formValidateSchema>;
 
-export default function DetailPeople() {
+export default function DetailCity() {
   const { id = "nova" } = useParams<RouteParams>();
   const [isLoading, setIsLoading] = useState(false);
   const [nome, setNome] = useState("");
