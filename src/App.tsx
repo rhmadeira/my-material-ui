@@ -6,11 +6,11 @@ import "./shared/form/TranslationYup";
 function App() {
   return (
     <>
-      <Login>
-        <SideBar>
-          <AppRoutes />
-        </SideBar>
-      </Login>
+      {/* <Login> */}
+      <SideBar>
+        <AppRoutes />
+      </SideBar>
+      {/* </Login> */}
     </>
   );
 }
